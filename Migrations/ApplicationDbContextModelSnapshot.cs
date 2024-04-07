@@ -33,6 +33,12 @@ namespace Btec_Website.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsVisibleToStudents")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVisibleToTeachers")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -42,34 +48,17 @@ namespace Btec_Website.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("Btec_Website.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("Btec_Website.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Role")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -79,12 +68,7 @@ namespace Btec_Website.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
+                    b.HasKey("Role");
 
                     b.ToTable("Users");
                 });
@@ -92,27 +76,23 @@ namespace Btec_Website.Migrations
             modelBuilder.Entity("Btec_Website.Models.UserCourse", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
 
                     b.Property<int>("CourseId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(2);
+
+                    b.Property<int>("UserRole")
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "CourseId");
 
                     b.HasIndex("CourseId");
 
+                    b.HasIndex("UserRole");
+
                     b.ToTable("UserCourse");
-                });
-
-            modelBuilder.Entity("Btec_Website.Models.User", b =>
-                {
-                    b.HasOne("Btec_Website.Models.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Btec_Website.Models.UserCourse", b =>
@@ -125,7 +105,7 @@ namespace Btec_Website.Migrations
 
                     b.HasOne("Btec_Website.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserRole")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

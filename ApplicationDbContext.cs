@@ -1,7 +1,10 @@
 ﻿
 using Btec_Website.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System.Data;
 namespace Btec_Website
 {
 
@@ -12,14 +15,15 @@ namespace Btec_Website
         // Example:
         // public DbSet<User> Users { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserCourse> UserCourse { get; set; }
         public DbSet<Course> Courses { get; set; }
 
         string ConnectionString =
-        "Server=DONGVANDINH;Database=BTEC;"
+        "Server=QUANG-SILLY-GOO;Database=BTEC;"
         +
         "Integrated Security=true;TrustServerCertificate=true;";
 
+ 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Configure the database provider and connection string
@@ -29,9 +33,10 @@ namespace Btec_Website
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserCourse>()
-                .HasKey(uc => new { uc.UserId, uc.CourseId });
-
+            modelBuilder.Entity<User>().HasKey(u => u.Id);
+            modelBuilder.Entity<User>().HasKey(r => r.Role);
+            modelBuilder.Entity<Course>().HasKey(c => c.Id);
+            modelBuilder.Entity<UserCourse>().HasKey(uc => new { uc.UserId, uc.CourseId });
             // Other entity configurations
         }
       

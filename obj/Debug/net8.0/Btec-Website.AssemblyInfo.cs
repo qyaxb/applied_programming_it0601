@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Btec-Website")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95f091c3dcea0d98747b10707a0e6fcc1e19a6e3")]
 [assembly: System.Reflection.AssemblyProductAttribute("Btec-Website")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Btec-Website")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
